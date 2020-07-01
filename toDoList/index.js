@@ -1,10 +1,10 @@
 const vm = new Vue({
     el: "#app",
-    value: '',
     data: {
         underway: [],
         duplicate: [],
-        alreadyCompleted: []
+        alreadyCompleted: [],
+        value: ''
     },
     methods: {
         add() {

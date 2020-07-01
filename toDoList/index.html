@@ -15,7 +15,7 @@
             <div class="container">
                 <div class="logo">toDoList</div>
                 <div class="input-area">
-                    <input type="text" @input='handleInput' />
+                    <input type="text" @input='handleInput' :value='value' />
                     <button @click='add'>添加</button>
                 </div>
             </div>
