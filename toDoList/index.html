@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="../vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="header">
+            <div class="container">
+                <div class="logo">toDoList</div>
+                <div class="input-area">
+                    <input type="text" @input='handleInput' />
+                    <button @click='add'>添加</button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <h2>
+                <span>正在进行</span>
+                <span class="mask-num" v-text="underway.length">1</span>
+            </h2>
+            <ul class="mask-list">
+                <li v-for="(item,index) in underway" :key="underway.id">
+                    <div>
+                        <input type="checkbox" @click.prevent='delivery(index,"need" )'>
+                        <span>{{ item.title }}</span>
+                    </div>
+                    <button @click='delte(index,"need")'>刪除</button>
+                </li>
+            </ul>
+        </div>
+        <div class=" container">
+            <h2>
+                <span>已经完成</span>
+                <span class="mask-num" v-text="alreadyCompleted.length">0</span>
+            </h2>
+            <ul class="mask-list complete-list">
+                <li v-for="(item,index) in alreadyCompleted" :key="item.id">
+                    <div>
+                        <input type="checkbox" @click.prevent='delivery(index,"over")'>
+                        <span>{{ item.title }}</span>
+                    </div>
+                    <button @click='delte(index,"over")'>刪除</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="index.js"></script>
+</body>
+
+</html>
