@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <link rel="stylesheet" href="调查问卷.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="area" v-for="area  in 2">
+            <h2> {{ area === 1 ?'提问区': '回答区'  }} </h2>
+            <ul>
+                <li v-for="(item,index) in questionList" :key="item.id">
+                    <h3>{{ item.title }}</h3>
+                    <!-- 姓名区 -->
+                    <div v-if='item.type =="short"'>
+                        <template v-if="area === 1">
+                            <input type="text" v-model="item.answar">
+                        </template>
+                        <span v-else>答案 {{ item.answar }}</span>
+                    </div>
+                    <!-- 性别区 -->
+                    <div v-else-if='item.type == "single"'>
+                        <template v-if="area === 1">
+                            <div v-for="choose in item.chooseList" :key="choose">
+                                <input type="radio" :value="choose" v-model="item.answar" />
+                                <span>{{ choose }}</span>
+                            </div>
+                        </template>
+
+                        <span v-else>答案 {{ item.answar  }}</span>
+                    </div>
+                    <!-- 兴趣区 -->
+                    <div v-else-if="item.type == 'multiple'">
+                        <template v-if="area == 1">
+                            <div v-for="choose in item.chooseList">
+                                <input type="checkbox" :value='choose' v-model="item.answar">
+                                <span>{{ choose }}</span>
+                            </div>
+                        </template>
+                        <span v-else>答案 {{ item.answar && item.answar.toString() }}</span>
+                    </div>
+                    <!-- 个人介绍区 -->
+                    <div v-else>
+                        <template v-if="area == 1">
+                            <textarea v-model='item.answar'></textarea>
+                        </template>
+                        <span v-else>答案{{ item.answar }} </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                questionList: [{
+                        type: 'short',
+                        title: '1.请问你的姓名是？',
+                        chooseList: null,
+                        id: 0,
+                    },
+                    {
+                        type: 'single',
+                        title: '2.请问您的性别是？',
+                        chooseList: [
+                            '男',
+                            '女',
+                            '保密',
+                        ],
+                        id: 1,
+                    },
+                    {
+                        type: 'multiple',
+                        title: '3. 请选择您的兴趣爱好：',
+                        chooseList: [
+                            '看书',
+                            '游泳',
+                            '跑步',
+                            '看电影',
+                            '听音乐',
+                        ],
+                        id: 2,
+                    },
+                    {
+                        type: 'long',
+                        title: '4. 请介绍一下自己:',
+                        chooseList: null,
+                        id: 3,
+                    },
+                ]
+            },
+        })
+        //给v-modle设置接收类型
+        vm.questionList.forEach(item => {
+            let answar = item.type === 'multiple' ? [] : '';
+            vm.$set(item, 'answar', answar)
+        })
+    </script>
+</body>
+
+</html>
